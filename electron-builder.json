@@ -1,0 +1,27 @@
+{
+    "appId": "com.roshanrajcmd.echotype",
+    "files": [
+        "dist-electron",
+        "dist-react"
+    ],
+    "extraResources": [
+        "dist-electron/preload.cjs",
+        "src/assets/**"
+    ],
+    "mac": {
+        "target": "dmg",
+        "icon": "build/icons/icon.icns"
+    },
+    "linux": {
+        "target": "AppImage",
+        "category": "Self Improvement",
+        "icon": "build/icons/"
+    },
+    "win": {
+        "target": [
+            "portable",
+            "msi"
+        ],
+        "icon": "build/icons/icon.ico"
+    }
+}

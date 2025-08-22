@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        // Enables strict type-checking options
+        "strict": true,
+        // tell TypeScript to generate ESM syntax
+        "target": "ESNext",
+        //tell TypeScript to require ESM Syntax as input (including .js file imports)
+        "module": "NodeNext",
+        // define where to put generated JS
+        "outDir": "../../dist-electron",
+        // ignore errors from dependencies
+        "skipLibCheck": true
+    },
+}
