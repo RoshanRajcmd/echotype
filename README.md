@@ -1,14 +1,182 @@
-# EchoType - A Vocal Typing Tutor
-## Electron + React + TypeScript + Vite
+# EchoType
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A **vocalized typing practice desktop application** that helps users improve their typing skills through **audio prompts** and **real-time feedback**. Built using **Electron + React + TypeScript + Vite**, EchoType bridges modern web UI with native desktop capabilities.
 
-Currently, two official plugins are available:
+## ⚙️ Source Code
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+> Single-repo Electron application
 
-## Expanding the ESLint configuration
+* **UI (React + Vite)**: Located under `src/ui`
+* **Electron Main Process**: Located under `src/electron`
+
+## 📚 Tech Stack and Packages
+
+* Electron
+* React
+* TypeScript
+* Vite
+* SWC
+* ESLint (Type-Checked Configuration)
+* electron-builder
+
+### Official Vite Plugins Used
+
+* `@vitejs/plugin-react` – Babel-based Fast Refresh
+* `@vitejs/plugin-react-swc` – SWC-based Fast Refresh (used for faster builds)
+
+## 🎛️ Features
+
+1. Vocalized typing prompts
+2. Real-time typing feedback
+3. Desktop application experience using Electron
+4. Hot Module Reloading during development
+5. Type-safe React architecture
+6. Cross-platform build support (Windows, macOS, Linux)
+
+## 🧑‍💻 Developer Setup
+
+### 🏗️ Project Creation
+
+```bash
+npm create vite .
+```
+
+* Template: **React**
+* Language: **TypeScript**
+* Compiler: **SWC**
+
+Install dependencies:
+
+```bash
+npm i
+```
+
+### ⚡ Electron Setup
+
+Install Electron as a **dev dependency**:
+
+```bash
+npm i --save-dev electron
+```
+
+> Electron is only required during development and build time, not at runtime after packaging.
+
+Install Electron Builder:
+
+```bash
+npm i electron-builder
+```
+
+Used to bundle the application into platform-specific executables.
+
+---
+
+### ▶️ Running the App
+
+#### Run React (Browser)
+
+```bash
+npm run dev:react
+```
+
+* Runs Vite dev server in the browser
+* Configured as a custom script in `package.json`
+
+#### Build React
+
+```bash
+npm run build
+```
+
+* Outputs production files to `dist-react`
+* To change output directory, modify `build.outDir` in `vite.config.ts`
+
+#### Run Electron (Desktop)
+
+```bash
+npm run dev:electron
+```
+
+⚠️ **Important Vite Config**
+
+To ensure assets resolve correctly in Electron:
+
+```ts
+base: './'
+```
+
+Configured in `vite.config.ts`.
+
+---
+
+### 🧠 Application Flow (Electron + React)
+
+```txt
+index.html
+   └── <div id="root"></div>
+main.tsx
+   └── ReactDOM.createRoot(document.getElementById('root'))
+        └── render(<App />)
+App.tsx
+   └── Contains all UI components
+```
+
+**Flow Explanation:**
+
+1. Electron entry point is defined in `package.json`:
+
+```json
+"main": "dist-electron/main.js"
+```
+
+2. `dist-electron/main.js`:
+
+   * Creates a browser window
+   * Loads `dist-react/index.html`
+
+3. `index.html`:
+
+   * Contains `<div id="root"></div>`
+
+4. `src/ui/main.tsx`:
+
+   * Bootstraps React
+   * Renders `<App />`
+   * Imports global styles (`index.css`)
+
+---
+
+### 🔄 Electron TypeScript Transpilation
+
+Script in `package.json`:
+
+```json
+"transpile:electron": "tsc -project src/electron/tsconfig.json"
+```
+
+* Compiles Electron TypeScript → JavaScript
+* Outputs to `dist-electron`
+* This directory is used as the Electron entry point
+
+---
+
+### 📦 Building Executables
+
+Based on target platform, run:
+
+```bash
+npm run dist:mac
+npm run dist:win
+npm run dist:linux
+```
+
+* Final executables are generated in the `/dist` directory
+
+---
+
+## 🧹 ESLint Configuration
+
+### Type-Checked ESLint Setup
 
 ```js
 export default tseslint.config([
@@ -16,32 +184,23 @@ export default tseslint.config([
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
       ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
       ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
       ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
     ],
     languageOptions: {
       parserOptions: {
         project: ['./tsconfig.node.json', './tsconfig.app.json'],
         tsconfigRootDir: import.meta.dirname,
       },
-      // other options...
     },
   },
 ])
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### React-Specific ESLint Plugins (Optional)
 
 ```js
-// eslint.config.js
 import reactX from 'eslint-plugin-react-x'
 import reactDom from 'eslint-plugin-react-dom'
 
@@ -50,10 +209,7 @@ export default tseslint.config([
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
-      // Other configs...
-      // Enable lint rules for React
       reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
       reactDom.configs.recommended,
     ],
     languageOptions: {
@@ -61,53 +217,9 @@ export default tseslint.config([
         project: ['./tsconfig.node.json', './tsconfig.app.json'],
         tsconfigRootDir: import.meta.dirname,
       },
-      // other options...
     },
   },
 ])
 ```
 
-## Project Creation:
-
-`npm create vite .` 
-with React and textscript + SWC for build
-
-`npm i`
-to install node modules
-`npm i electron-builder`
-to use electron-builder to bundle up our application package.
-
-`npm i --save-dev electron`
-to install electron as a project devDependency. So, electron will not be installed as the project instead added as dependecy to the project specificaly as Dev dependency as it servers no purpous after package buid.
-
-`npm run dev:react` (Configured in package.json as script)
-to run the vite's dev environment in browser
-
-`npm run build`
-will build the react app and have the build files under `dis-react` directory. To change the directory modify the build ourDir property in vite.config.ts
-
-"main": "dist-electron/main.js", in the package.json tell the compiler that this is the starting point.
-so the flow of app initilaize will be...
-dist-electron/main.js creates a Browser window and load the index.html in that window, which is located in the <Program Files path> (in the case of windows) or <Applications path> (in the case of Linux & Mac) followed by the path of the project root -/dist-react/index.html. And in `index.html` which will have a div id-ed as `root`. and there is `src/ui/main.tsx` which will access the `root` to create a dom that renders the component App which is `App.tsx`. The main.tsx will import the `React` and `ReactDOM` which is what making it as react application. This main.txs will also import the App component, its global style file `index.css`. 
-
-```jsx
-index.html
-   └── <div id="root"></div>
-main.txs
-   └── ReactDOM.createRoot(document.getElementById('root'))
-        └── render(<App />)
-App.txs
-   └── Contains all your actual UI and subcomponents
-```
-
-`npm run dev:electron` (Configured in package.json as script)
-to run the app as an electron application.
-Also make sure to rebase the root directory so subdirectries can be asseble and the application works in the eletron view. You can do that using `base: './',` property configured in the vite.config.ts
-
-
-"transpile:electron": "tsc -project src/electron/tsconfig.json" in the package.json will make the typescript conpiler to follow the configuration rules in tscofig.json. This command will compile the Typescript file into Javascript file and place it in dis-electron directory which is pointed as the entry point for our application.
-
-Running the following based on the targeted platform will create the final application executable in the /dist directory.
-npm run "dist:mac"
-npm run "dist:win"
-npm run "dist:linux"
+---
