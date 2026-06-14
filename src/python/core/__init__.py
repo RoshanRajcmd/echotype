@@ -1,0 +1,1 @@
+"""EchoType - Python core package"""

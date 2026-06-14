@@ -1,0 +1,47 @@
+# Python desktop version
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+.DS_Store
+*.log
+*.pot
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Whisper cache
+~/.cache/whisper/
+
+# Audio temporary files
+/tmp/whisper_temp.wav
