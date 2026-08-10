@@ -1,0 +1,1 @@
+"""EchoType Python application package."""
